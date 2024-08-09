@@ -104,25 +104,46 @@ public class PlayerManager : MonoBehaviour
         if (time_count >= take_effect_interval)
         {
             time_count = 0;//リセット
-            //雲の下にいるとき回復
-            if (is_under_cloud)
+            if (umbrella.GetState() != UMBRELLA_STATE.OPEN)
             {
-                HealHP(1);
-            }
-            //傘が開いていなければダメージ
-            else if (umbrella.GetState() != UMBRELLA_STATE.OPEN)
-            {
-                ReduceHP(1);
+
+                //雲の下にいるとき回復
+                if (is_under_cloud)
+                {
+                    HealHP(1);
+                }
+                //傘が開いていなければダメージ
+                else
+                {
+                    ReduceHP(1);
+                }
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         //攻撃に接触
         if (collision.gameObject.tag == "Attack")
         {
-            TakeDamage(20);
+            TakeDamage(attack_damage);
+        }       
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //雨に入ったとき
+        if (collision.gameObject.tag == "Rain")
+        {
+            is_under_cloud = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //雨から出たとき
+        if (collision.gameObject.tag == "Rain")
+        {
+            is_under_cloud = false;
         }
     }
 

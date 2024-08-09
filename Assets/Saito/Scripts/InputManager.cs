@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         //プレイヤー１
+        if (playerManager[0] != null)
         {
             //移動
             if (Input.GetKey(KeyCode.D))
@@ -28,40 +29,41 @@ public class InputManager : MonoBehaviour
             }
 
             //ジャンプ
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 playerManager[0].Jump();
             }
 
             //傘開閉
-            if(Input.GetKeyDown(KeyCode.F))
+            if(Input.GetKeyDown(KeyCode.S))
             {
                 playerManager[0].ChangeUmbrella();
             }
         }
 
         //プレイヤー２
+        if(playerManager[1]!=null)
         {
             //移動
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                playerManager[0].MoveX(Direction.RIGHT);
+                playerManager[1].MoveX(Direction.RIGHT);
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                playerManager[0].MoveX(Direction.LEFT);
+                playerManager[1].MoveX(Direction.LEFT);
             }
 
             //ジャンプ
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                playerManager[0].Jump();
+                playerManager[1].Jump();
             }
 
             //傘開閉
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                playerManager[0].ChangeUmbrella();
+                playerManager[1].ChangeUmbrella();
             }
         }
 
