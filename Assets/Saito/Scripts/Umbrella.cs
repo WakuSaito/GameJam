@@ -1,3 +1,9 @@
+public enum UMBRELLA_STATE
+{
+    CLOSE,
+    OPEN,
+    NOHAVING,
+}
 
 public class Umbrella
 {

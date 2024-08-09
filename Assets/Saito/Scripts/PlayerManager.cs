@@ -12,14 +12,22 @@ public enum Direction
 
 public class PlayerManager : MonoBehaviour
 {
+    //自コンポーネント
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
     BoxCollider2D boxCollider;
 
+    PlayerHP playerHP;//体力クラス
+    Umbrella umbrella;//装備している傘
+
+    GameManager gameManager;//ゲームマネージャクラス
+
+    [SerializeField]
+    string player_name = "player";
+
     [SerializeField]
     Slider hpSlider;
 
-    Umbrella umbrella = new Umbrella();//装備している傘
     //プレハブ
     [SerializeField]
     GameObject openUmbrella;
@@ -43,7 +51,6 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField]//最大体力
     int max_hp = 200;
-    int current_hp; //現在の体力
 
     [SerializeField]//攻撃力
     int attack_damage = 20;
@@ -67,6 +74,12 @@ public class PlayerManager : MonoBehaviour
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
 
+        //クラス作成
+        playerHP = new PlayerHP(max_hp);
+        umbrella = new Umbrella();
+
+        //クラス取得
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         ResetState();//リセット
 
@@ -99,6 +112,8 @@ public class PlayerManager : MonoBehaviour
             current_move_speed -= 0.1f;//減速
         }
 
+        if (gameManager.IsOver()) return;//ゲーム終了なら効果を受けない
+
         //定期的に環境効果を受ける
         time_count += Time.deltaTime;//時間計測
         if (time_count >= take_effect_interval)
@@ -110,13 +125,15 @@ public class PlayerManager : MonoBehaviour
                 //雲の下にいるとき回復
                 if (is_under_cloud)
                 {
-                    HealHP(1);
+                    playerHP.HealHP(1);
                 }
                 //傘が開いていなければダメージ
                 else
                 {
-                    ReduceHP(1);
+                    playerHP.ReduceHP(1);
                 }
+
+                UpdateHPBar();
             }
         }
     }
@@ -133,7 +150,7 @@ public class PlayerManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //雨に入ったとき
-        if (collision.gameObject.tag == "Rain")
+        if (collision.gameObject.tag == "rain")
         {
             is_under_cloud = true;
         }
@@ -141,7 +158,7 @@ public class PlayerManager : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         //雨から出たとき
-        if (collision.gameObject.tag == "Rain")
+        if (collision.gameObject.tag == "rain")
         {
             is_under_cloud = false;
         }
@@ -206,6 +223,7 @@ public class PlayerManager : MonoBehaviour
 
         CreateUmbrella();
     }
+
     //傘オブジェクト作成
     private void CreateUmbrella()
     {
@@ -242,49 +260,20 @@ public class PlayerManager : MonoBehaviour
         }));
 
 
-        ReduceHP(_damage);
+        playerHP.ReduceHP(_damage);//hpを減らす
+        UpdateHPBar();
     }
 
-    //hpを減らす
-    public void ReduceHP(int _damage)
+    //HPバー更新
+    private void UpdateHPBar()
     {
-        //体力計算
-        int next_hp = current_hp - _damage;
+        float per = playerHP.GetPercentage();//割合取得
 
-        if (next_hp <= 0)
-        {
-            current_hp = 0;
-            //死亡処理
-        }
-        else
-        {
-            //hpを減らす
-            current_hp = next_hp;
-        }
-        Debug.Log(current_hp);
-        //ゲージ更新
-        hpSlider.value = (float)current_hp / (float)max_hp;
+        if (per <= 0) gameManager.OnGameOver(player_name);//ゲームオーバー処理
 
+        hpSlider.value = per;//ゲージ更新
     }
-    //回復
-    public void HealHP(int _heal)
-    {
-        //体力計算
-        int next_hp = current_hp + _heal;
 
-        if (next_hp >= max_hp)
-        {
-            current_hp = max_hp;//最大まで回復
-        }
-        else
-        {
-            //hpを回復
-            current_hp = next_hp;
-        }
-
-        //ゲージ更新
-        hpSlider.value = (float)current_hp / (float)max_hp;
-    }
 
     //現在の傘の状態取得
     public UMBRELLA_STATE GetUmbrellaState()
@@ -292,12 +281,13 @@ public class PlayerManager : MonoBehaviour
         return umbrella.GetState();
     }
 
+
     //状態リセット
     public void ResetState()
     {
         on_invincible = false;
         on_ground = false;
-        current_hp = max_hp;
+        playerHP.HealHP(10000);
         current_move_speed = 0.0f;
         umbrella.state = UMBRELLA_STATE.OPEN;
     }
