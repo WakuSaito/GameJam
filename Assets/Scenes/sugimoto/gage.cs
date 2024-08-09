@@ -32,7 +32,7 @@ public class gage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!umbrella.state_flag[(int)umbrella.STATE.OPEN] && !damage_flag)
+        if (!umbrella.state_flag[(int)umbrella.STATE.OPEN] && !damage_flag || !umbrella.state_flag[(int)umbrella.STATE.NOHAVING] && !damage_flag)
         {
             Damege();
         }
@@ -49,7 +49,7 @@ public class gage : MonoBehaviour
         }
     }
 
-    void Damege()
+    public void Damege()
     {
         // 体力ゲージの幅と高さをVector2で取り出す(Width,Height)
         Vector2 nowsafes = gage_obj.GetComponent<RectTransform>().sizeDelta;
@@ -58,7 +58,6 @@ public class gage : MonoBehaviour
         // 体力ゲージに計算済みのVector2を設定する
         gage_obj.GetComponent<RectTransform>().sizeDelta = nowsafes;
         damage_flag = true;
-
     }
 
 }
