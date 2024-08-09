@@ -19,6 +19,6 @@ public class wind : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            transform.position += new Vector3(vec.x * Time.deltaTime, -vec.y * Time.deltaTime);
+        transform.position += new Vector3(vec.x * Time.deltaTime, -vec.y * Time.deltaTime);
     }
 }

@@ -4,27 +4,37 @@ using UnityEngine;
 
 public class weather : MonoBehaviour
 {
+    //傘の情報
+    umbrella umbrella;
+    [SerializeField] GameObject umbrella_obj;
+
+    //生成したいプレイハブオブジェクト
     [SerializeField] GameObject rain_prefab;
     [SerializeField] GameObject wind_prefab;
 
+    //生成したクローンオブジェクト
     GameObject rain_obj;
     GameObject wind_obj;
 
+    //生成したい位置（複数可）
     [SerializeField] Transform[] rain_pos;
     [SerializeField] Transform[] wind_pos;
 
+    //各動作までのタイマー
     float rain_timer = 0.0f;
     float wind_timer = 0.0f;
 
+    //スポーン間隔
     [SerializeField] float rain_spawn_timer;
     [SerializeField] float wind_spawn_timer;
+    //デスポーン間隔
     [SerializeField] float rain_death_spawn_timer;
     [SerializeField] float wind_death_spawn_timer;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        umbrella = umbrella_obj.GetComponent<umbrella>();
     }
 
     // Update is called once per frame
