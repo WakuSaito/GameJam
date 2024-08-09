@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     Umbrella umbrella;//装備している傘
 
     GameManager gameManager;//ゲームマネージャクラス
+    Weather weather;
 
     [SerializeField]
     string player_name = "player";
@@ -57,7 +58,8 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField]//無敵時間
     float invincible_sec = 0.5f;
-
+    [SerializeField]//傘が帰ってくるまでの時間
+    float lost_sec = 5.0f;
     [SerializeField]//環境の効果を受ける間隔
     float take_effect_interval = 0.3f;
     float time_count = 0;//カウント用
@@ -80,6 +82,10 @@ public class PlayerManager : MonoBehaviour
 
         //クラス取得
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        weather = GameObject.Find("Weather").GetComponent<Weather>();
+
+        Text name_text = hpSlider.GetComponentInChildren<Text>();//名前を反映
+        if (name_text != null) name_text.text = player_name;
 
         ResetState();//リセット
 
@@ -135,6 +141,13 @@ public class PlayerManager : MonoBehaviour
 
                 UpdateHPBar();
             }
+        }
+
+        //風を受けた時の処理（条件を変える可能性あり）
+        if(weather.IsWind() && umbrella.GetState() == UMBRELLA_STATE.OPEN)
+        {
+            LostUmbrella();//傘をなくす
+
         }
     }
 
@@ -215,13 +228,19 @@ public class PlayerManager : MonoBehaviour
 
         CreateUmbrella();
     }
-
+    //傘ロスト
     public void LostUmbrella()
     {
         Debug.Log("傘ロスト");
-        umbrella.Lost();
-
+        umbrella.Lost();//傘を失う
         CreateUmbrella();
+
+        //一定時間後帰ってくる
+        StartCoroutine(DelayCoroutine(lost_sec, () =>
+        {
+            umbrella.PickUp();
+            CreateUmbrella();
+        }));
     }
 
     //傘オブジェクト作成

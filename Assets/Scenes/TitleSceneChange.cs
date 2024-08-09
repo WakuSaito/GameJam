@@ -5,20 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class TitleSceneChange : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
     {
         // スペースボタンが押されたら
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.anyKeyDown)
         {
             // PlaySceneに切り替え
-            SceneManager.LoadScene("PlayScene");
+            SceneManager.LoadScene("Saito");
         }
     }
 }

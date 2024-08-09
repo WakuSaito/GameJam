@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class weather : MonoBehaviour
+public class Weather : MonoBehaviour
 {
-    //傘の情報
-    [SerializeField] GameObject umbrella_obj;
-
     //生成したいプレイハブオブジェクト
     [SerializeField] GameObject rain_prefab;
     [SerializeField] GameObject wind_prefab;
@@ -72,5 +69,10 @@ public class weather : MonoBehaviour
             wind_timer = 0;
             is_wind = false;
         }
+    }
+
+    public bool IsWind()
+    {
+        return is_wind;
     }
 }
