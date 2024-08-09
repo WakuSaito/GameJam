@@ -5,20 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class ResultSceneChange : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
         // スペースボタンが押されたら
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.anyKeyDown)
         {
             // TitleSceneに切り替え
-            SceneManager.LoadScene("TitleScene");
+            SceneManager.LoadScene("kuriya");
         }
     }
 }

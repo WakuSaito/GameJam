@@ -7,14 +7,18 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     PlayerManager[] playerManager;//プレイヤー
 
+    GameManager gameManager;
+
     private void Awake()
     {
-        
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gameManager.IsOver()) return;//ゲーム終了なら入力を受け付けない
+
         //プレイヤー１
         if (playerManager[0] != null)
         {

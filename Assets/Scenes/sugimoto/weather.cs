@@ -2,12 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class weather : MonoBehaviour
+public class Weather : MonoBehaviour
 {
-    //傘の情報
-    umbrella umbrella;
-    [SerializeField] GameObject umbrella_obj;
-
     //生成したいプレイハブオブジェクト
     [SerializeField] GameObject rain_prefab;
     [SerializeField] GameObject wind_prefab;
@@ -31,11 +27,8 @@ public class weather : MonoBehaviour
     [SerializeField] float rain_death_spawn_timer;
     [SerializeField] float wind_death_spawn_timer;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        umbrella = umbrella_obj.GetComponent<umbrella>();
-    }
+    bool is_wind;//風が吹いているか
+
 
     // Update is called once per frame
     void Update()
@@ -61,6 +54,7 @@ public class weather : MonoBehaviour
             wind_obj = Instantiate(wind_prefab, wind_pos[i], true);
             wind_obj.transform.position = wind_pos[i].position;
             wind_timer = 0;
+            is_wind = true;
         }
         //雨雲削除
         if (rain_timer > rain_death_spawn_timer && rain_obj != null)  
@@ -73,6 +67,12 @@ public class weather : MonoBehaviour
         {
             Destroy(wind_obj);
             wind_timer = 0;
+            is_wind = false;
         }
+    }
+
+    public bool IsWind()
+    {
+        return is_wind;
     }
 }

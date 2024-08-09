@@ -1,3 +1,9 @@
+public enum UMBRELLA_STATE
+{
+    CLOSE,
+    OPEN,
+    NOHAVING,
+}
 
 public class Umbrella
 {
@@ -28,5 +34,12 @@ public class Umbrella
         if (state == UMBRELLA_STATE.NOHAVING) return;//‚Á‚Ä‚¢‚È‚¢‚È‚ç•Ï‰»‚µ‚È‚¢
 
         state = UMBRELLA_STATE.NOHAVING;//–¢Š‚É‚·‚é
+    }
+    //P‚ğè‚É“ü‚ê‚é
+    public void PickUp()
+    {
+        if (state != UMBRELLA_STATE.NOHAVING) return;//‚Á‚Ä‚¢‚È‚¢‚È‚ç•Ï‰»‚µ‚È‚¢
+
+        state = UMBRELLA_STATE.OPEN;//Š‚É‚·‚é
     }
 }

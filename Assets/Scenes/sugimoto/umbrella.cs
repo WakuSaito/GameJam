@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum UMBRELLA_STATE
-{
-    CLOSE,
-    OPEN,
-    NOHAVING,
-}
+
 
 public class umbrella : MonoBehaviour
 {
