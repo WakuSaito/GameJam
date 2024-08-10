@@ -245,9 +245,17 @@ public class PlayerManager : MonoBehaviour
 
         if(umbrella.GetState() == UMBRELLA_STATE.OPEN)//ŠJ‚¢‚½‚Æ‚«
         {
-            if (!is_hit_attack) return;//UŒ‚‚ğ‚­‚ç‚Á‚Ä‚¢‚½‚ç
+            se.PlayAudio(se.umbrella_open);//se
+            if (is_hit_attack) //UŒ‚‚ğ‚­‚ç‚Á‚Ä‚¢‚½‚ç
+            {
+                gameManager.GetOtherPlayer(player_name).LostUmbrella();//‘Šè‚ÌP‚ğ‰ó‚·
+                se.PlayAudio(se.umbrella_brock);//se
+            }
 
-            gameManager.GetOtherPlayer(player_name).LostUmbrella();//‘Šè‚ÌP‚ğ‰ó‚·
+        }
+        else//•Â‚¶‚½‚Æ‚«
+        {
+            se.PlayAudio(se.umbrella_close);//se
         }
 
     }

@@ -11,6 +11,9 @@ public class SE : MonoBehaviour
     [SerializeField] public AudioClip cloud_spwan;
     [SerializeField] public AudioClip jump;
     [SerializeField] public AudioClip clear_se;
+    [SerializeField] public AudioClip umbrella_open;
+    [SerializeField] public AudioClip umbrella_close;
+    [SerializeField] public AudioClip umbrella_brock;
 
     // Start is called before the first frame update
     void Start()

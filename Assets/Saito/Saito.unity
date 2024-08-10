@@ -395,6 +395,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio_SE
       objectReference: {fileID: 0}
+    - target: {fileID: 6506394125219160655, guid: 00c421f0fc18fb0408255fbaccf29fee, type: 3}
+      propertyPath: umbrella_open
+      value: 
+      objectReference: {fileID: 8300000, guid: 4f7325687459a214f833abeeee9a2fbd, type: 3}
+    - target: {fileID: 6506394125219160655, guid: 00c421f0fc18fb0408255fbaccf29fee, type: 3}
+      propertyPath: umbrella_break
+      value: 
+      objectReference: {fileID: 8300000, guid: 98262de80cd54754b852388b1580ec16, type: 3}
+    - target: {fileID: 6506394125219160655, guid: 00c421f0fc18fb0408255fbaccf29fee, type: 3}
+      propertyPath: umbrella_brock
+      value: 
+      objectReference: {fileID: 8300000, guid: 9ca18ec1ed34722408da041ebc1defeb, type: 3}
+    - target: {fileID: 6506394125219160655, guid: 00c421f0fc18fb0408255fbaccf29fee, type: 3}
+      propertyPath: umbrella_close
+      value: 
+      objectReference: {fileID: 8300000, guid: 6b7b692958bc5e949ac6e6a9c4cb2a7e, type: 3}
     - target: {fileID: 6912999236606553078, guid: 00c421f0fc18fb0408255fbaccf29fee, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5388126
