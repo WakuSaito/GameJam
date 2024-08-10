@@ -26,8 +26,10 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     string player_name = "player";
 
-    [SerializeField]
+    [SerializeField]//HPバー
     Slider hpSlider;
+    [SerializeField]//ダメージエフェクト
+    GameObject hitEffect;
 
     //プレハブ
     [SerializeField]
@@ -67,6 +69,7 @@ public class PlayerManager : MonoBehaviour
     bool on_ground = false;      //地面の上かフラグ
     bool on_invincible = false;  //無敵フラグ
     bool is_under_cloud = false; //雲の下にいるか
+    bool is_dead = false;   //死亡フラグ
 
 
     private void Awake()
@@ -82,7 +85,7 @@ public class PlayerManager : MonoBehaviour
 
         //クラス取得
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        weather = GameObject.Find("Weather").GetComponent<Weather>();
+        //weather = GameObject.Find("Weather").GetComponent<Weather>();
 
         Text name_text = hpSlider.GetComponentInChildren<Text>();//名前を反映
         if (name_text != null) name_text.text = player_name;
@@ -136,13 +139,13 @@ public class PlayerManager : MonoBehaviour
                 //傘が開いていなければダメージ
                 else
                 {
-                    playerHP.ReduceHP(1);
+                    playerHP.ReduceHP(2);
                 }
 
                 UpdateHPBar();
             }
         }
-
+        if (weather == null) return;
         //風を受けた時の処理（条件を変える可能性あり）
         if(weather.IsWind() && umbrella.GetState() == UMBRELLA_STATE.OPEN)
         {
@@ -156,7 +159,8 @@ public class PlayerManager : MonoBehaviour
         //攻撃に接触
         if (collision.gameObject.tag == "Attack")
         {
-            TakeDamage(attack_damage);
+            if(TakeDamage(attack_damage))//ダメージを受ける処理
+                Instantiate(hitEffect,transform.position,Quaternion.identity);//エフェクト表示
         }       
     }
 
@@ -266,9 +270,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     //被ダメージ
-    public void TakeDamage(int _damage)
+    public bool TakeDamage(int _damage)
     {
-        if (on_invincible) return;//無敵なら受けない
+        if (on_invincible) return false;//無敵なら受けない
         Debug.Log("被ダメージ"+_damage);
 
         on_invincible = true;//無敵化
@@ -281,6 +285,8 @@ public class PlayerManager : MonoBehaviour
 
         playerHP.ReduceHP(_damage);//hpを減らす
         UpdateHPBar();
+
+        return true;
     }
 
     //HPバー更新
@@ -291,6 +297,11 @@ public class PlayerManager : MonoBehaviour
         if (per <= 0) gameManager.OnGameOver(player_name);//ゲームオーバー処理
 
         hpSlider.value = per;//ゲージ更新
+    }
+
+    public string GetName()
+    {
+        return player_name;
     }
 
 
