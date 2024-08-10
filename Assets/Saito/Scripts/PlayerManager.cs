@@ -85,7 +85,7 @@ public class PlayerManager : MonoBehaviour
 
         //ƒNƒ‰ƒXŽæ“¾
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        //weather = GameObject.Find("Weather").GetComponent<Weather>();
+        weather = GameObject.Find("Weather").GetComponent<Weather>();
 
         Text name_text = hpSlider.GetComponentInChildren<Text>();//–¼‘O‚ð”½‰f
         if (name_text != null) name_text.text = player_name;

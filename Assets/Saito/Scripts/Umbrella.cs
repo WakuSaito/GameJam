@@ -40,6 +40,6 @@ public class Umbrella
     {
         if (state != UMBRELLA_STATE.NOHAVING) return;//‚Á‚Ä‚¢‚È‚¢‚È‚ç•Ï‰»‚µ‚È‚¢
 
-        state = UMBRELLA_STATE.OPEN;//Š‚É‚·‚é
+        state = UMBRELLA_STATE.CLOSE;//Š‚É‚·‚é
     }
 }
