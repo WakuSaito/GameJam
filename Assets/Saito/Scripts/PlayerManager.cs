@@ -123,6 +123,11 @@ public class PlayerManager : MonoBehaviour
             current_move_speed -= 0.1f;//減速
         }
 
+        if(umbrella_obj != null)
+        {
+            umbrella_obj.GetComponent<UmbrellaMove>().SetPos(transform.position);//傘の位置変更
+        }
+
         if (gameManager.IsOver()) return;//ゲーム終了なら効果を受けない
 
         //定期的に環境効果を受ける
@@ -156,6 +161,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         //攻撃に接触
@@ -168,10 +174,6 @@ public class PlayerManager : MonoBehaviour
             }
             is_hit_attack = true;
         }       
-        else
-        {
-            is_hit_attack = false;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -188,6 +190,11 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.tag == "rain")
         {
             is_under_cloud = false;
+        }
+        if (collision.gameObject.tag == "Attack")
+        {
+            Debug.Log("離れた");
+            is_hit_attack = false;
         }
     }
 
@@ -283,14 +290,14 @@ public class PlayerManager : MonoBehaviour
         //オブジェクト作成
         if (umbrella.GetState() == UMBRELLA_STATE.OPEN)
         {
-            umbrella_obj = Instantiate(openUmbrella, gameObject.transform);
+            umbrella_obj = Instantiate(openUmbrella);
         }
         else if(umbrella.GetState() == UMBRELLA_STATE.CLOSE)
         {
             if(direction == Direction.LEFT)
-                umbrella_obj = Instantiate(closeUmbrellaL, gameObject.transform);
+                umbrella_obj = Instantiate(closeUmbrellaL);
             else
-                umbrella_obj = Instantiate(closeUmbrellaR, gameObject.transform);
+                umbrella_obj = Instantiate(closeUmbrellaR);
 
 
         }

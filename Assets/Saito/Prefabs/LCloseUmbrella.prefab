@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8134352860179543924}
   - component: {fileID: 3235338598448922878}
   - component: {fileID: 455365593950734769}
+  - component: {fileID: -8321982675380463569}
   m_Layer: 0
   m_Name: LCloseUmbrella
   m_TagString: Attack
@@ -117,7 +118,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1.0115557}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -128,5 +129,18 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.83, y: 8}
+  m_Size: {x: 1.83, y: 5.9768887}
   m_EdgeRadius: 0
+--- !u!114 &-8321982675380463569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8939234011974696126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69fbc29bb2bac25449317d10509ff3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  base_pos: {x: -1, y: 0}
