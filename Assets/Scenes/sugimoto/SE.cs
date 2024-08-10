@@ -6,11 +6,11 @@ public class SE : MonoBehaviour
 {
     AudioSource audioSource;
 
-    [SerializeField] AudioClip wind;
-    [SerializeField] AudioClip attack;
-    [SerializeField] AudioClip cloud_spwan;
-    [SerializeField] AudioClip jump;
-    [SerializeField] AudioClip clear_se;
+    [SerializeField] public AudioClip wind;
+    [SerializeField] public AudioClip attack;
+    [SerializeField] public AudioClip cloud_spwan;
+    [SerializeField] public AudioClip jump;
+    [SerializeField] public AudioClip clear_se;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class SE : MonoBehaviour
         
     }
 
-    void PlayAudio(AudioClip _audio)
+    public void PlayAudio(AudioClip _audio)
     {
         audioSource.PlayOneShot(_audio);
     }

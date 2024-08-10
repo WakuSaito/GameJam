@@ -21,24 +21,32 @@ public class GameManager : MonoBehaviour
     //ゲーム終了フラグ
     public void OnGameOver(string _loser_name)
     {
-        string win_name;
+        PlayerManager win_player = GetOtherPlayer(_loser_name);
+        if (win_player == null) return;
 
-        //負けたプレイヤー以外を取得
-        foreach(var pm in playerManagers)
+        //負けたプレイヤー以外の名前取得
+        string win_name = win_player.GetName();
+
+        Debug.Log(win_name + "の勝利");
+        is_over = true;
+        StaticData.winner_name = win_name;//シーンを跨いで持っていく
+
+        // ResultSceneに切り替え
+        SceneManager.LoadScene("syouhai");
+    }
+
+    public PlayerManager GetOtherPlayer(string _name)
+    {
+        //名前が同じでないプレイヤーを取得
+        foreach (var pm in playerManagers)
         {
             string name = pm.GetName();//名前取得
-            if (name != _loser_name)
+            if (name != _name)
             {
-                win_name = name;
-                Debug.Log(win_name + "の勝利");
-                is_over = true;
-                StaticData.winner_name = win_name;//シーンを跨いで持っていく
-
-                // ResultSceneに切り替え
-                SceneManager.LoadScene("syouhai");
-                break;
+                return pm;
             }
-        }        
+        }
+        return null;
     }
 
     public bool IsOver()

@@ -5,6 +5,8 @@ using System;
 
 public class Weather : MonoBehaviour
 {
+    SE se;
+
     //生成したいプレイハブオブジェクト
     [SerializeField] GameObject rain_prefab;
     [SerializeField] GameObject wind_prefab;
@@ -37,6 +39,8 @@ public class Weather : MonoBehaviour
     private void Awake()
     {
         canvas = GameObject.Find("Canvas");//キャンバス取得
+        se = GameObject.Find("Audio_SE").GetComponent<SE>();
+
     }
 
     // Update is called once per frame
@@ -54,6 +58,7 @@ public class Weather : MonoBehaviour
             rain_obj = Instantiate(rain_prefab, rain_pos[i], true);
             rain_obj.transform.position = rain_pos[i].position;
             rain_timer = 0;
+            se.PlayAudio(se.cloud_spwan);//se
         }
         //雨雲削除
         if (rain_timer > rain_death_spawn_timer && rain_obj != null)  
@@ -83,6 +88,7 @@ public class Weather : MonoBehaviour
                 wind_obj = Instantiate(wind_prefab, wind_pos[i], true);
                 wind_obj.transform.position = wind_pos[i].position;
                 is_wind = true;
+                se.PlayAudio(se.wind);//se
 
             }));
         }
