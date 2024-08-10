@@ -41,7 +41,7 @@ public class ResultSceneManager : MonoBehaviour
         if (Input.anyKeyDown)
         {
             //Ø‚è‘Ö‚¦‰Â”\
-            if (can_change)
+            //if (can_change)
                 // TitleScene‚ÉØ‚è‘Ö‚¦
                 SceneManager.LoadScene("kuriya");
         }

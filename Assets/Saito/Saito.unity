@@ -1772,7 +1772,7 @@ MonoBehaviour:
   - {fileID: 7990089490632542160}
   - {fileID: 4797205944386190674}
   rain_spawn_timer: 5
-  wind_spawn_timer: 100
+  wind_spawn_timer: 13
   rain_death_spawn_timer: 5
   wind_death_spawn_timer: 5
 --- !u!1660057539 &9223372036854775807
