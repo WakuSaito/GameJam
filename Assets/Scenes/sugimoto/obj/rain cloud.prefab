@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7868232173356494883}
   m_Layer: 0
   m_Name: rain cloud
-  m_TagString: rain cloud
+  m_TagString: rain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +116,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.29271412, y: -9.435164}
