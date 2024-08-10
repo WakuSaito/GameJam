@@ -13,11 +13,11 @@ public class Rain : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector3 pos = transform.position;
         pos.x += 0.00f;    // x座標へ0.00加算
-        pos.y -= 0.01f;    // y座標へ-0.01加算
+        pos.y -= 0.1f;    // y座標へ-0.01加算
         pos.z += 0.00f;    // z座標へ0.00加算
 
         transform.position = pos;  // 座標を設定
