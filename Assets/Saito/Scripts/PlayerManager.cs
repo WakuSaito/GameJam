@@ -120,7 +120,7 @@ public class PlayerManager : MonoBehaviour
             //Xベクトル更新
             rb.velocity = new Vector2(vec_x * current_move_speed, rb.velocity.y);
 
-            current_move_speed -= 0.1f;//減速
+            current_move_speed -= 50.0f*Time.deltaTime;//減速
         }
 
         if(umbrella_obj != null)
