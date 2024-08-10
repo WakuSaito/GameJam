@@ -12,19 +12,33 @@ public static class StaticData
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    PlayerManager[] playerManagers;
 
     bool is_over = false;
 
+
     //ゲーム終了フラグ
-    public void OnGameOver(string _name)
+    public void OnGameOver(string _loser_name)
     {
-        Debug.Log(_name+"の勝利");
+        string win_name;
 
-        is_over = true;
-        StaticData.winner_name = _name;//シーンを跨いで持っていく
+        //負けたプレイヤー以外を取得
+        foreach(var pm in playerManagers)
+        {
+            string name = pm.GetName();//名前取得
+            if (name != _loser_name)
+            {
+                win_name = name;
+                Debug.Log(win_name + "の勝利");
+                is_over = true;
+                StaticData.winner_name = win_name;//シーンを跨いで持っていく
 
-        // ResultSceneに切り替え
-        SceneManager.LoadScene("syouhai");
+                // ResultSceneに切り替え
+                SceneManager.LoadScene("syouhai");
+                break;
+            }
+        }        
     }
 
     public bool IsOver()
