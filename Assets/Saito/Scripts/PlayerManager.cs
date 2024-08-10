@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
 
     GameManager gameManager;//ゲームマネージャクラス
     Weather weather;
+    SE se;
 
     [SerializeField]
     string player_name = "player";
@@ -69,7 +70,7 @@ public class PlayerManager : MonoBehaviour
     bool on_ground = false;      //地面の上かフラグ
     bool on_invincible = false;  //無敵フラグ
     bool is_under_cloud = false; //雲の下にいるか
-    bool is_dead = false;   //死亡フラグ
+    bool is_hit_attack = false;  //攻撃が当たっている
 
 
     private void Awake()
@@ -86,6 +87,7 @@ public class PlayerManager : MonoBehaviour
         //クラス取得
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         weather = GameObject.Find("Weather").GetComponent<Weather>();
+        se = GameObject.Find("Audio_SE").GetComponent<SE>();
 
         Text name_text = hpSlider.GetComponentInChildren<Text>();//名前を反映
         if (name_text != null) name_text.text = player_name;
@@ -159,9 +161,17 @@ public class PlayerManager : MonoBehaviour
         //攻撃に接触
         if (collision.gameObject.tag == "Attack")
         {
-            if(TakeDamage(attack_damage))//ダメージを受ける処理
+            if (TakeDamage(attack_damage))//ダメージを受ける処理
+            {
                 Instantiate(hitEffect,transform.position,Quaternion.identity);//エフェクト表示
+                se.PlayAudio(se.attack);//se
+            }
+            is_hit_attack = true;
         }       
+        else
+        {
+            is_hit_attack = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -221,6 +231,8 @@ public class PlayerManager : MonoBehaviour
 
         on_ground = false;
 
+        se.PlayAudio(se.jump);//se
+
         return true;
     }
 
@@ -229,8 +241,23 @@ public class PlayerManager : MonoBehaviour
     {
         Debug.Log("傘切り替え");
         umbrella.ChangeOpen();
-
         CreateUmbrella();
+
+        if(umbrella.GetState() == UMBRELLA_STATE.OPEN)//開いたとき
+        {
+            se.PlayAudio(se.umbrella_open);//se
+            if (is_hit_attack) //攻撃をくらっていたら
+            {
+                gameManager.GetOtherPlayer(player_name).LostUmbrella();//相手の傘を壊す
+                se.PlayAudio(se.umbrella_brock);//se
+            }
+
+        }
+        else//閉じたとき
+        {
+            se.PlayAudio(se.umbrella_close);//se
+        }
+
     }
     //傘ロスト
     public void LostUmbrella()

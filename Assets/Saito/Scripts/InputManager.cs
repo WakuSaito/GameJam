@@ -9,6 +9,14 @@ public class InputManager : MonoBehaviour
 
     GameManager gameManager;
 
+    public float success_sec = 1.0f;//’·‰Ÿ‚µ¬Œ÷ŠÔ
+
+    //’·‰Ÿ‚µƒJƒEƒ“ƒg
+    bool is_count_s = false;
+    float push_s_count;
+    bool is_count_down = false;
+    float push_down_count;
+
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -41,8 +49,24 @@ public class InputManager : MonoBehaviour
             //PŠJ•Â
             if(Input.GetKeyDown(KeyCode.S))
             {
-                playerManager[0].ChangeUmbrella();
+                is_count_s = true;//’·‰Ÿ‚µŠJn
             }
+            else if(Input.GetKeyUp(KeyCode.S))
+            {
+                push_s_count = 0;
+                is_count_s = false;//’·‰Ÿ‚µ’â~
+            }
+            if(is_count_s)//’·‰Ÿ‚µˆ—
+            {
+                push_s_count += Time.deltaTime;
+                if (push_s_count >= success_sec)
+                {
+                    playerManager[0].ChangeUmbrella();//P‚ğŠJ‚­
+                    push_s_count = 0;
+                    is_count_s = false;//’·‰Ÿ‚µ’â~
+                }
+            }
+
         }
 
         //ƒvƒŒƒCƒ„[‚Q
@@ -67,8 +91,24 @@ public class InputManager : MonoBehaviour
             //PŠJ•Â
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                playerManager[1].ChangeUmbrella();
+                is_count_down = true;//’·‰Ÿ‚µŠJn
             }
+            else if (Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                push_down_count = 0;
+                is_count_down = false;//’·‰Ÿ‚µ’â~
+            }
+            if (is_count_down)//’·‰Ÿ‚µˆ—
+            {
+                push_down_count += Time.deltaTime;
+                if (push_down_count >= success_sec)
+                {
+                    playerManager[1].ChangeUmbrella();//P‚ğŠJ‚­
+                    push_down_count = 0;
+                    is_count_down = false;//’·‰Ÿ‚µ’â~
+                }
+            }
+
         }
 
     }

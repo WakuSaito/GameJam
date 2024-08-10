@@ -8,16 +8,24 @@ using System;
 
 public class ResultSceneManager : MonoBehaviour
 {
+    SE se;
+
     [SerializeField]//名前のテキスト
     Text name_text;
 
     bool can_change = false;//シーン切り替え可能
+
+    private void Awake()
+    {
+        se = GameObject.Find("Audio_SE").GetComponent<SE>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         name_text.text = StaticData.winner_name;
         can_change = false;
+        se.PlayAudio(se.clear_se);//se
 
         StartCoroutine(DelayCoroutine(2.0f, () =>
         {
